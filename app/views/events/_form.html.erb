@@ -1,0 +1,58 @@
+<%= form_with(model: event, local: true) do |form| %>
+  <% if event.errors.any? %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <h2><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+      <ul>
+      <% event.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+  <% end %>
+
+  <div class="field">
+    <%= form.label :start_date %>
+    <%= form.datetime_select :start_date, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :duration %>
+    <%= form.number_field :duration, min: 5, :step => 5, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :price %>
+    <%= form.number_field :price, within: 1...1000, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :location %>
+    <%= form.text_field :location, class: 'form-control' %>
+  </div>
+
+<% if false %>
+  <div class="field">
+    <%= form.label :administrator %>
+    <%= form.collection_select :user_id, User.order(:first_name),:id,:first_name, include_blank: true %>
+  </div>
+<% end %>
+
+  <div class="actions d-flex justify-content-center">
+    <%= form.submit 'Soummettre', class: 'btn btn-outline-primary'%>
+  </div>
+<% end %>

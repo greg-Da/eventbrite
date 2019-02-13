@@ -1,0 +1,45 @@
+<div class="card m-2">
+  <div class="card-body m-0 p-0">
+    <h5 class="card-title text-center p-2"><%=@event.title%></h5>
+    <hr> 
+    <p class="card-text text-center"><%= @event.description %></p>
+    <p class="card-text">
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <th scope="row">Durée</th>
+            <td><%= @event.duration %> min</td>
+          </tr>
+          <tr>
+            <th scope="row">Date</th>
+            <td><%= @event.start_date %></td>
+          </tr>
+          <tr>
+            <th scope="row">Prix</th>
+            <td>  <%= @event.price %> €</td>
+          </tr>
+          <tr>
+            <th scope="row">Lieu</th>
+            <td> <%= @event.location %></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </p>
+  </div>
+  <div class="card-footer">Administrator : <%= @event.administrator.name %></div>
+</div>
+
+<div class="d-flex justify-content-around">
+  <%= link_to 'Back', events_path, class: "btn btn-outline-primary"  %>
+  <% if current_user %>
+        <% if current_user == @event.administrator %>
+      <%= link_to 'Edit', edit_event_path(@event), class: "btn btn-outline-primary" %>
+      <%= link_to 'Destroy', @event, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-primary" %>
+      <%= link_to 'Liste de vos participants', event_attendances_path(@event), class: "btn btn-outline-primary" %>
+    <% elsif !current_user.events.include?(@event)%>
+      <%= link_to "S'inscrire", new_event_attendance_path(@event), class: "btn btn-outline-primary" %>
+    <% end %>   
+  <% end %>    
+</div>
+
